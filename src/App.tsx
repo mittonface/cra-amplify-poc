@@ -73,10 +73,12 @@ const AuthRouter = () => {
   return (
     <Router>
       <Suspense fallback="loading">
-        <Route path="/">
-          <AmplifySignOut />
-          <p>:)</p>
-        </Route>
+        <Switch>
+          <Route path="/">
+            <AmplifySignOut />
+            <p>:)</p>
+          </Route>
+        </Switch>
       </Suspense>
     </Router>
   );
@@ -86,12 +88,14 @@ const UnauthRouter = () => {
   return (
     <Router>
       <Suspense fallback="loading">
-        <Route path="/signin">
-          <SignInPage />
-        </Route>
-        <Route path="/">
-          <Redirect to="/signin" />
-        </Route>
+        <Switch>
+          <Route path="/signin">
+            <SignInPage />
+          </Route>
+          <Route path="/">
+            <Redirect to="/signin" />
+          </Route>
+        </Switch>
       </Suspense>
     </Router>
   );
