@@ -8,6 +8,7 @@ import {
 import { UserContext, UserProvider } from "./components/user";
 
 import Amplify from "aws-amplify";
+import { AmplifySignOut } from "@aws-amplify/ui-react";
 
 const SignInPage = lazy(() => import("./pages/signin"));
 
@@ -68,7 +69,16 @@ const Main = () => {
 };
 
 const AuthRouter = () => {
-  return <p>Good work</p>;
+  return (
+    <Router>
+      <Suspense fallback="loading">
+        <Route path="/">
+          <AmplifySignOut />
+          <p>:)</p>
+        </Route>
+      </Suspense>
+    </Router>
+  );
 };
 
 const UnauthRouter = () => {
