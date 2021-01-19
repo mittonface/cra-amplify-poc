@@ -1,5 +1,6 @@
 import Amplify from "aws-amplify";
 import React from "react";
+import { withAuthenticator } from "@aws-amplify/ui-react";
 
 const SignIn = () => {
   React.useEffect(() => {
@@ -18,4 +19,4 @@ const SignIn = () => {
   return <p>Good Stuff</p>;
 };
 
-export default SignIn;
+export default withAuthenticator(SignIn);
