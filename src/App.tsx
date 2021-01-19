@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Component, Suspense, lazy } from "react";
 import {
   Redirect,
   Route,
@@ -62,29 +62,6 @@ const Main = () => {
     }
   }, []);
 
-  if (user) {
-    return <AuthRouter />;
-  } else {
-    return <UnauthRouter />;
-  }
-};
-
-const AuthRouter = () => {
-  return (
-    <Router>
-      <Suspense fallback="loading">
-        <Switch>
-          <Route path="/">
-            <AmplifySignOut />
-            <p>:)</p>
-          </Route>
-        </Switch>
-      </Suspense>
-    </Router>
-  );
-};
-
-const UnauthRouter = () => {
   return (
     <Router>
       <Suspense fallback="loading">
@@ -92,12 +69,29 @@ const UnauthRouter = () => {
           <Route path="/signin">
             <SignInPage />
           </Route>
-          <Route path="/">
-            <Redirect to="/signin" />
-          </Route>
+          <PrivateRoute path="/" component={<p>:)</p>}></PrivateRoute>
         </Switch>
       </Suspense>
     </Router>
+  );
+};
+
+// @ts-ignore
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const { user } = React.useContext(UserContext);
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        user ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{ pathname: "/login", state: { from: props.location } }}
+          />
+        )
+      }
+    />
   );
 };
 
