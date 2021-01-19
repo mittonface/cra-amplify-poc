@@ -64,8 +64,9 @@ const Main = () => {
 
   if (user) {
     return <AuthRouter />;
+  } else {
+    return <UnauthRouter />;
   }
-  return <UnauthRouter />;
 };
 
 const AuthRouter = () => {
